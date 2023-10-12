@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>農家の求人情報登録</title>
+    <style>
+        /* スタイリング用の簡単なCSS */
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>農家の求人情報登録</h2>
+    <form action="/register_job" method="post">
+        <label for="location">勤務地:</label>
+        <input type="text" name="location" id="location" required>
+
+        <label for="description">仕事内容:</label>
+        <textarea name="description" id="description" required></textarea>
+
+        <label for="working_hours">勤務時間:</label>
+        <input type="text" name="working_hours" id="working_hours" required>
+
+        <label for="hourly_wage">時給:</label>
+        <input type="text" name="hourly_wage" id="hourly_wage" required>
+
+        <label for="contact">連絡先:</label>
+        <input type="text" name="contact" id="contact" required>
+
+        <input type="submit" value="登録">
+    </form>
+</body>
+
+</html>
