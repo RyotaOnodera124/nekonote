@@ -13,9 +13,9 @@ line_bot_api = LineBotApi(os.environ["ACCESS_TOKEN"])
 handler = WebhookHandler(os.environ["CHANNEL_SECRET"])
 
 
-@app.route('/')
+@app.route("/")
 def index():
-    return 'You call index()'
+    return "You call index()"
 
 
 @app.route("/push_sample")
@@ -44,8 +44,7 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    line_bot_api.reply_message(event.reply_token,
-                               TextSendMessage(text=event.message.text))
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.message.text))
 
 
 if __name__ == "__main__":
