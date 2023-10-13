@@ -27,6 +27,7 @@ if not db.connect():
 class Job(Model):
     location = CharField()
     description = TextField()
+    work_day = CharField()
     working_hours = CharField()
     hourly_wage = CharField()
     contact = CharField()
@@ -77,6 +78,7 @@ def register_job():
     if request.method == "POST":
         location = request.form.get("location")
         description = request.form.get("description")
+        work_day = request.form.get("work_day")
         working_hours = request.form.get("working_hours")
         hourly_wage = request.form.get("hourly_wage")
         contact = request.form.get("contact")
@@ -85,13 +87,15 @@ def register_job():
         job = Job.create(
             location=location,
             description=description,
+            work_day=work_day,
             working_hours=working_hours,
             hourly_wage=hourly_wage,
             contact=contact,
         )
 
         # 登録完了画面にリダイレクト
-        return redirect(url_for("registration_complete", location=location, description=description, 
+        return redirect(url_for("registration_complete", location=location,
+                                description=description, work_day=work_day,
                                 working_hours=working_hours, hourly_wage=hourly_wage, contact=contact))
     else:
         return "Method Not Allowed"
@@ -102,11 +106,12 @@ def registration_complete():
     # リクエストのクエリパラメータからフォームデータを取得
     location = request.args.get("location")
     description = request.args.get("description")
+    work_day = request.args.get("work_day")
     working_hours = request.args.get("working_hours")
     hourly_wage = request.args.get("hourly_wage")
     contact = request.args.get("contact")
 
-    return render_template("registration_complete.html", location=location, description=description, working_hours=working_hours, hourly_wage=hourly_wage, contact=contact)
+    return render_template("registration_complete.html", location=location, description=description, work_day=work_day, working_hours=working_hours, hourly_wage=hourly_wage, contact=contact)
 
 
 @app.route("/registration_success")

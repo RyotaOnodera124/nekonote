@@ -27,6 +27,7 @@ class Job(Model):
 
     location = CharField()
     description = TextField()
+    work_day = CharField()
     working_hours = CharField()
     hourly_wage = FloatField()
     contact = CharField()
