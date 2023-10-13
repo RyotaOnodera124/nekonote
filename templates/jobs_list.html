@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>求人情報一覧</title>
+</head>
+
+<body>
+    <h1>求人情報一覧</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>勤務地</th>
+                <th>仕事内容</th>
+                <th>勤務日</th>
+                <th>勤務時間</th>
+                <th>時給</th>
+                <th>連絡先</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+            <tr>
+                <td>{{ job.location }}</td>
+                <td>{{ job.description }}</td>
+                <td>{{ job.work_day }}</td>
+                <td>{{ job.working_hours }}</td>
+                <td>{{ job.hourly_wage }}</td>
+                <td>{{ job.contact }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
