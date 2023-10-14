@@ -73,6 +73,31 @@ def job_list():
     return render_template("jobs_list.html", jobs=jobs)
 
 
+# 絞り込み検索ページを表示
+@app.route("/filter_jobs")
+def filter_jobs():
+    return render_template("filter_jobs.html")
+
+
+# 絞り込み検索結果を表示
+@app.route("/filtered_jobs", methods=["GET"])
+def filtered_jobs():
+    location_filter = request.args.get("location_filter")
+    work_day_filter = request.args.get("work_day_filter")
+
+    # データベースから条件に合致する求人情報を取得
+    if location_filter and work_day_filter:
+        filtered_jobs = Job.select().where(Job.location.contains(location_filter) & Job.work_day.contains(work_day_filter))
+    elif location_filter:
+        filtered_jobs = Job.select().where(Job.location.contains(location_filter))
+    elif work_day_filter:
+        filtered_jobs = Job.select().where(Job.work_day.contains(work_day_filter))
+    else:
+        filtered_jobs = Job.select()
+
+    return render_template("filtered_jobs.html", jobs=filtered_jobs)
+
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     if event.message.text == "仕事を探す":
