@@ -67,6 +67,12 @@ def callback():
     return "OK"
 
 
+@app.route("/jobs")
+def job_list():
+    jobs = Job.select()  # データベースから求人情報を取得
+    return render_template("jobs_list.html", jobs=jobs)
+
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     if event.message.text == "仕事を探す":
