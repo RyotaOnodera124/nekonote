@@ -119,13 +119,6 @@ def registration_success():
     return render_template("registration_success.html")
 
 
-# 新しいエンドポイントを追加: 求人情報の一覧を表示
-@app.route("/jobs")
-def job_list():
-    jobs = Job.select()  # データベースから求人情報を取得
-    return render_template("job_list.html", jobs=jobs)
-
-
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=8080)
