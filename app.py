@@ -57,7 +57,6 @@ def push_sample():
 def callback():
     signature = request.headers["X-Line-Signature"]
     body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
 
     try:
         handler.handle(body, signature)
@@ -69,7 +68,16 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.message.text))
+    if event.message.text == "仕事を探す":
+        # データベースから求人情報の一覧を取得
+        jobs = Job.select()
+        job_list = "\n".join([f"{job.location}: {job.description}" for job in jobs])
+
+        # 求人情報をユーザーに返信
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=f"現在の求人情報:\n{job_list}")
+        )
 
 
 # /register_job エンドポイントを追加
@@ -121,4 +129,4 @@ def registration_success():
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
-    app.run(host="0.0.0.0", port=8080)
+    app.run(host="0.0.0.0", port=port)
