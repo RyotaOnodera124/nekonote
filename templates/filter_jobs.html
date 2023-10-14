@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>絞り込み検索</title>
+</head>
+
+<body>
+    <h1>絞り込み検索</h1>
+
+    <form action="/filtered_jobs" method="get">
+        <label for="location_filter">勤務地:</label>
+        <input type="text" name="location_filter" id="location_filter" placeholder="勤務地を入力">
+
+        <label for="work_day_filter">勤務日:</label>
+        <input type="text" name="work_day_filter" id="work_day_filter" placeholder="勤務日を入力">
+
+        <button type="submit">絞り込み</button>
+    </form>
+</body>
+
+</html>
