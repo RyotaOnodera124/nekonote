@@ -7,8 +7,7 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from dotenv import load_dotenv
 from peewee import CharField, TextField, Model
 from playhouse.db_url import connect
-from datetime import datetime
-from apscheduler.schedulers.background import BackgroundScheduler
+
 
 load_dotenv()
 
@@ -135,26 +134,6 @@ def registration_success():
     return render_template("registration_success.html")
 
 
-def cleanup_expired_jobs():
-    # 現在の日付を取得
-    current_date = datetime.now().date()
-
-    # 日付が過ぎた求人情報を削除
-    expired_jobs = Job.delete().where(Job.expiration_date < current_date)
-    expired_jobs.execute()
-
-
-# ジョブを定義
-def scheduled_job():
-    cleanup_expired_jobs()
-
-
-# スケジューラを設定
-scheduler = BackgroundScheduler()
-scheduler.add_job(scheduled_job, 'interval', hours=24)  # 24時間ごとに実行
-
-
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
-    scheduler.start()
     app.run(host="0.0.0.0", port=port)
