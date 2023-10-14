@@ -69,14 +69,20 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     if event.message.text == "仕事を探す":
+        # メッセージの最初に挨拶を追加
+        response_message = "お問い合わせありがとうございます！以下が現在登録されている求人情報です。\n"
+
         # データベースから求人情報の一覧を取得
         jobs = Job.select()
-        job_list = "\n".join([f"{job.location}: {job.description}" for job in jobs])
+        for job in jobs:
+            # 各求人情報を整形して追加
+            job_info = f"勤務地: {job.location}\n仕事内容: {job.description}\n勤務日: {job.work_day}\n勤務時間: {job.working_hours}\n時給: {job.hourly_wage}\n連絡先: {job.contact}\n\n"
+            response_message += job_info
 
         # 求人情報をユーザーに返信
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=f"現在の求人情報:\n{job_list}")
+            TextSendMessage(text=response_message)
         )
 
 
